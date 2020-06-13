@@ -11,10 +11,11 @@ It was designed for use on my site [lukec.me](https://lukec.me.me) - the code im
 ## Response
 The response is sent as a JSON object with the following parameters:
 
-`song` - This is the title of the song you were last listening to.
+* `song` - This is the title of the song you were last listening to.
 
-`artist` - This is the first artist or band listed on the label. The order is generally up to the publisher.
+* `artist` - This is the first artist or band listed on the label. The order is generally up to the publisher.
 
+#
 Generally it will look something like this:
 ```
 {
