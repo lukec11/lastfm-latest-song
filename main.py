@@ -5,25 +5,28 @@ from os import environ as env
 
 app = Flask(__name__)
 
+
 def queryLatest(user):
     res = json.loads(requests.get(
         f"https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user={user}&api_key={env['API_KEY']}&format=json&limit=1"
-        ).text
+    ).text
     )
     song = res['recenttracks']['track'][0]['name']
     artist = res['recenttracks']['track'][0]['artist']['#text']
+    url = res['recenttracks']['track'][0]['url']
 
-    return [song, artist]
+    return [song, artist, url]
 
 
 @app.route('/latest', methods=['GET'])
 def latestSong():
     user = request.args.get('user')
     latestSong = queryLatest(user)
-    
-    songInfo =  {
+
+    songInfo = {
         'song': latestSong[0],
-        'artist': latestSong[1]
+        'artist': latestSong[1],
+        'url': latestSong[2]
     }
 
     resp = Response(
@@ -35,6 +38,6 @@ def latestSong():
 
 app.run(
     port=3000,
-    debug=True,
+    debug=False,
     host='0.0.0.0'
 )
